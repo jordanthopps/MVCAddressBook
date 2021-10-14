@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MVCAddressBook.Data;
 using MVCAddressBook.Models;
+using MVCAddressBook.Services;
+using MVCAddressBook.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +38,8 @@ namespace MVCAddressBook
             services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
+
+            services.AddScoped<IImageService, BasicImageService>(); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
