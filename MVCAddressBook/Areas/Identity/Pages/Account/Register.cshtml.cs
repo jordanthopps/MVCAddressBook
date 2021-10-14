@@ -50,10 +50,16 @@ namespace MVCAddressBook.Areas.Identity.Pages.Account
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
+            //The email attribute searches for string@string.string from the user.
+            //This means abc@bcd.co.uk will stop reading at abc@bcd.co
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            //When calling StringLength, you must pass it a password less than 101. The second arg. Error Message must be a string.
+            //In the arg., 0 refers to prop name (Password), 2 is minimum length, and 1 is maximum length.
+            //The third argument says the password must be at least six.
             [DataType(DataType.Password)]
+            //DataType.Password enforces 1 capital letter, 1 lowercase letter, 1 number, 1 special character
             [Display(Name = "Password")]
             public string Password { get; set; }
 
@@ -61,8 +67,16 @@ namespace MVCAddressBook.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+            
+            [Required]
+            [Display(Name = "First Name")]
+            [StringLength(50, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
 
             public string FirstName { get; set; }
+
+            [Required]
+            [Display(Name = "Last Name")]
+            [StringLength(50, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
             public string LastName { get; set; }
         }
 

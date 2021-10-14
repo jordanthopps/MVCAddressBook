@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,6 +13,7 @@ using MVCAddressBook.Models;
 
 namespace MVCAddressBook.Controllers
 {
+    [Authorize]
     public class CategoriesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -25,8 +28,9 @@ namespace MVCAddressBook.Controllers
         // GET: Categories
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Categories.Include(c => c.User);
-            return View(await applicationDbContext.ToListAsync());
+            var userId = _userManager.GetUserId(User);
+            var applicationDbContext = await _context.Categories.Include(c => c.User).Where(c => c.UserId == userId).ToListAsync();
+            return View(applicationDbContext);
         }
 
         // GET: Categories/Details/5
@@ -93,7 +97,7 @@ namespace MVCAddressBook.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,Name")] Category category)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Category category)
         {
             if (id != category.Id)
             {
@@ -104,7 +108,11 @@ namespace MVCAddressBook.Controllers
             {
                 try
                 {
-                    _context.Update(category);
+                    //Tracked object
+                    //How to update the database without the .Update() method
+                    //No hidden inputs other than Id needed
+                    var originalCategory = await _context.Categories.FindAsync(id); //Async methods return a task
+                    originalCategory.Name = category.Name;
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -120,7 +128,7 @@ namespace MVCAddressBook.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", category.UserId);
+
             return View(category);
         }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,6 +12,7 @@ using MVCAddressBook.Models;
 
 namespace MVCAddressBook.Controllers
 {
+    [Authorize]
     public class ContactsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -19,14 +21,17 @@ namespace MVCAddressBook.Controllers
         public ContactsController(ApplicationDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
-            _userManager = userManager;
+            _userManager = userManager; //This means we're not only accessing the database but also the user store from the database (AspNetUsers)
         }
 
         // GET: Contacts
+        //[Authorize(Roles = "Admin")] means you have to be a certain role to access specific functionality of a controller.
+        // [AllowAnonymous] let's us cancel the high-level Authorize assigned to the Contacts Controller class for a specific action.
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Contacts.Include(c => c.User);
-            return View(await applicationDbContext.ToListAsync());
+            var userId = _userManager.GetUserId(User);
+            var applicationDbContext = await _context.Contacts.Include(c => c.User).Where(c => c.UserId == userId).ToListAsync();
+            return View(applicationDbContext);
         }
 
         // GET: Contacts/Details/5
@@ -64,7 +69,7 @@ namespace MVCAddressBook.Controllers
         {
             if (ModelState.IsValid)
             {
-                contact.UserId = _userManager.GetUserId(User);
+                contact.UserId = _userManager.GetUserId(User); //Capital "U" User in the controller represents the end-user
                 contact.Created = DateTime.Now; //DateTime is the exact time that this code runs.
                 _context.Add(contact);
                 await _context.SaveChangesAsync();
@@ -104,7 +109,7 @@ namespace MVCAddressBook.Controllers
 
             if (ModelState.IsValid)
             {
-                try
+                try //the try catch block is a safety mechanism to catch problems in the code.
                 {
                     _context.Update(contact);
                     await _context.SaveChangesAsync();
