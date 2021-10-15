@@ -29,7 +29,7 @@ namespace MVCAddressBook.Services
             return $"data:image/{type};base64,{Convert.ToBase64String(data)}";
         }
 
-        public async Task<byte[]> EndcodeImageAsync(IFormFile file)
+        public async Task<byte[]> EncodeImageAsync(IFormFile file)
         {
             if(file is null)
             {

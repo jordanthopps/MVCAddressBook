@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 namespace MVCAddressBook.Services.Interfaces
 {
     public interface IImageService //This interface will get used for the rest of the cohort.
+        /*A set of methods and properties that I have guaranteed access to. In a method it specifies three parameters
+        */
     {
-        Task<byte[]> EndcodeImageAsync(IFormFile file);
+        Task<byte[]> EncodeImageAsync(IFormFile file);
 
         Task<byte[]> EncodeImageAsync(string fileName);
 
