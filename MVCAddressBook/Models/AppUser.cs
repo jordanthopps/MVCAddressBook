@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MVCAddressBook.Models
 {
-    public class AppUser : IdentityUser
+    public class AppUser : IdentityUser //The IdentityUser class represents a user in the identity system.
     {
         [Required]
         [DataType(DataType.Text)]

@@ -19,7 +19,7 @@ namespace MVCAddressBook.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<AppUser> _userManager;
 
-        public CategoriesController(ApplicationDbContext context, UserManager<AppUser> userManager) //this line is a dependency f(x).
+        public CategoriesController(ApplicationDbContext context, UserManager<AppUser> userManager) //this line is a dependency f(x). Block 22-26 is a constructor.
         {
             _context = context;
             _userManager = userManager;

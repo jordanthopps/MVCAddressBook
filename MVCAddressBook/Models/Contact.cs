@@ -9,14 +9,15 @@ using System.Threading.Tasks;
 
 namespace MVCAddressBook.Models
 {
-    public class Contact //every class we add is a column in a database
+    public class Contact //Step 1.
+                         //Every property we add is a column in the database.
     {
         //Primary key (me)
         public int Id { get; set; } //This is a database property. Unless specified, the db will use this prop as a key.
        
         //Foreign key (someone else)
         public string UserId { get; set; } //Prop naming convention: first leters of words are capitalized.
-                                           //Foreign keys must exist.
+                                           //Foreign keys must exist for multi-tenant projects.
 
         [Required]
         [Display(Name = "First Name")]
@@ -31,6 +32,8 @@ namespace MVCAddressBook.Models
         [Required]
         [DataType(DataType.Date)]
         public DateTime? Birthday { get; set; }
+        /*DateTime is a non-nullable datatype that we need to access null values since we don't know if
+         a user will enter it. Append a ? to the end to make it nullable*/
 
         [Required]
         public string Address1 { get; set; }
@@ -59,22 +62,28 @@ namespace MVCAddressBook.Models
         [NotMapped] //this is called a data annotation. This says "do not put the prop underneath in the db."
         [DataType(DataType.Upload)]
         [Display(Name = "Contact Image")]
-        public IFormFile ImageFile { get; set; } //a. represents a file on a computer
+        public IFormFile ImageFile { get; set; } 
+        /*a. When an image is uploaded, the image itself is not stored in the database.
+        IFormFile parses an x64 string that the computer understands and this is what
+        is stored in the db. This is built-in security that defends against malicious uploads.*/
 
 
         public byte[] ImageData { get; set; } //b. this is a byte array. Represents when a file has been split apart and converted to the bytes that instruct a computer to recreate it.
-        public string ImageType { get; set; } //c. 
+        public string ImageType { get; set; } //c. ImageType represents the file extension of the image (jpeg, PNG, etc.)
 
         [NotMapped]
-        public string FullName { get { return $"{FirstName} {LastName}"; } } //we do not need to store the user's fullname as it's a combo of first and last which we have. We remove set.
-                                                                             //Instead, we create a property that queries the database for the first and last name together.
+        public string FullName { get { return $"{FirstName} {LastName}"; } } //we do not need to store the user's fullname as a sesparate column in the db as it's a combo of FirstName and LastName which we have.
+                                                                             //Instead, we "get" a property that returns the database values of the first and last name concatenated.
                                                                              //$"" is string interpolation that pulls this together.
 
-        public virtual AppUser User{ get; set; }//this is a navigational property. Not stored in the db. This is how we tell our db that every collection of contacts maps to one user.
-                                                //a non-nullable data types must have a value. Example: int and DataTime.
+        public virtual AppUser User{ get; set; }//this is a navigational property. Not stored in the db. This is how we tell our db that every contact maps to one and only one user.
+        //John's contacts aren't Jane's contacts which aren't Sam's contacts.
 
         public virtual ICollection<Category> Categories { get; set; } = new HashSet<Category>(); //angle brackets <> expect a "type" | For example "football contacts"
-            //12:07
+        //This property is unique to each user because of how we build the Category model, not because of the property itself.    
+        //An empty ICollection exists. And as long as it exists, we can add stuff to it. new HashSet<Category>() says when a new contact is created, it's going to need something to go into the Categories prop.
+        //The reason why categories and collections are represented as collections of one another is because both can exist without the either.
+        //Make the property names of collections plural. I.e., Categories
     }
 
 }
