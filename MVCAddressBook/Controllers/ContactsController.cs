@@ -24,13 +24,15 @@ namespace MVCAddressBook.Controllers
         private readonly int _minSize = 1024; //One KB of data
         private readonly int _maxSize = (1024 * 1024 * 2); //1 KB * 1 MB * 2 = 2 MB of data
         private readonly SearchService _searchService;
+        private readonly ICategoryService _categoryService;
 
-        public ContactsController(ApplicationDbContext context, UserManager<AppUser> userManager, IImageService imageService, SearchService searchService)
+        public ContactsController(ApplicationDbContext context, UserManager<AppUser> userManager, IImageService imageService, SearchService searchService, ICategoryService categoryService)
         {
             _context = context;
             _userManager = userManager; //This means we're not only accessing the database but also the user store from the database (AspNetUsers)
             _imageService = imageService;
             _searchService = searchService;
+            _categoryService = categoryService;
         }
 
         // GET: Contacts
@@ -80,7 +82,7 @@ namespace MVCAddressBook.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Birthday,Address1,Address2,City,State,ZipCode,Email,Phone,ImageFile")] Contact contact)
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Birthday,Address1,Address2,City,State,ZipCode,Email,Phone,ImageFile")] Contact contact, List<int> categoryList)
         {
             if (ModelState.IsValid)
             {
@@ -95,6 +97,11 @@ namespace MVCAddressBook.Controllers
 
                 _context.Add(contact);
                 await _context.SaveChangesAsync();
+
+                foreach(var categoryId in categoryList)
+                {
+                    await _categoryService.AddContactToCategoryAsync(categoryId, contact.Id);
+                }
                 return RedirectToAction(nameof(Index));
             }
             var userId = _userManager.GetUserId(User);

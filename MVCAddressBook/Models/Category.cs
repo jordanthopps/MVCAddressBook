@@ -9,7 +9,7 @@ namespace MVCAddressBook.Models
     public class Category
     {
         //Primary Key
-        public int Id { get; set; }
+        public int Id { get; set; } //The Id of a category is an integer.
 
         //Foreign Key simply connects our models together.
         public string UserId { get; set; }

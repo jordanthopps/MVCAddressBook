@@ -42,6 +42,7 @@ namespace MVCAddressBook
 
             services.AddScoped<IImageService, BasicImageService>();
             services.AddScoped<IEmailSender, EmailService>();
+            services.AddScoped<ICategoryService, CategoryService>();
             services.AddTransient<SearchService>();
 
         }

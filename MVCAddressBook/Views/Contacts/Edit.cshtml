@@ -69,8 +69,27 @@
             </div>
             <div class="form-group">
                 <label asp-for="Contact.ImageFile" class="control-label"></label>
-                <input asp-for="Contact.ImageFile" class="form-control-file" type="file"/>
+                <input asp-for="Contact.ImageFile" class="form-control-file" type="file" />
                 <span asp-validation-for="Contact.ImageFile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @foreach (var category in Model.CategoryList)
+                {
+                    if (Model.Contact.Categories.Select(c => c.Id).ToList().Contains(Convert.ToInt32(category.Value)))
+                    {
+                        <div class="form-check form-check-inline form-switch">
+                            <input type="checkbox" checked class="form-check-input" name="CategoryList" value="@category.Value" />
+                            <label class="form-check-label" for="CategoryList">@category.Text</label>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-check form-check-inline form-switch">
+                            <input type="checkbox" class="form-check-input" name="CategoryList" value="@category.Value" />
+                            <label class="form-check-label" for="CategoryList">@category.Text</label>
+                        </div>
+                    }
+                }
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
