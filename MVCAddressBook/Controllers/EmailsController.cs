@@ -53,7 +53,7 @@ namespace MVCAddressBook.Controllers
                 await _emailSender.SendEmailAsync(contact.Email, model.Subject, model.Message);
             }
 
-            return RedirectToAction(nameof(Index), "Contacts");
+            return RedirectToAction(nameof(Index), "Contacts"); //allows us to pick another action and have that execute
         }
     }
 }

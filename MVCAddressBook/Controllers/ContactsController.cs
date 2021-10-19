@@ -241,7 +241,10 @@ namespace MVCAddressBook.Controllers
             var model = new ContactIndexViewModel();
             var userId = _userManager.GetUserId(User);
 
-            var category = await _context.Categories.Include(c => c.Contacts).ThenInclude(c => c.Categories).FirstOrDefaultAsync(c => c.Id == categoryId);
+            var category = await _context.Categories
+                .Include(c => c.Contacts)
+                .ThenInclude(c => c.Categories)
+                .FirstOrDefaultAsync(c => c.Id == categoryId);
             
             model.Contacts = category.Contacts;
 
