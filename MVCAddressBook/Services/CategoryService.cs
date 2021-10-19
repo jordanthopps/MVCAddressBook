@@ -20,16 +20,20 @@ namespace MVCAddressBook.Services
 
         public async Task AddContactToCategoryAsync(int categoryId, int contactId)
         {
-            var contact = await _context.Contacts.FindAsync(contactId);
+            if (!await IsContactInCategory(categoryId, contactId))
+            {
 
-            var category = await _context.Categories.FindAsync(categoryId);
+                var contact = await _context.Contacts.FindAsync(contactId);
 
-            category.Contacts.Add(contact);
+                var category = await _context.Categories.FindAsync(categoryId);
 
-            //Alternate
-            //contact.Categories.Add(category);
+                category.Contacts.Add(contact);
 
-            await _context.SaveChangesAsync();
+                //Alternate
+                //contact.Categories.Add(category);
+
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task<ICollection<Category>> GetContactCategoriesAsync(int contactId)
@@ -46,18 +50,32 @@ namespace MVCAddressBook.Services
             return category.Contacts.Count;
         }
 
-        public async Task RemoveContactFromCategoryAsync(int categoryId, int contactId)
+        public async Task<bool> IsContactInCategory(int categoryId, int contactId)
         {
             var contact = await _context.Contacts.FindAsync(contactId);
 
-            var category = await _context.Categories.FindAsync(categoryId);
+            return await _context.Categories
+                .Include(c => c.Contacts) //a. go into the categories table
+                .Where(c => c.Id == categoryId && c.Contacts.Contains(contact))  //b. bring with you all of the contact information
+                .AnyAsync(); //c.then filter out the records by giving the category Id and c.Contacts.Contains(contact)
+        }
 
-            category.Contacts.Remove(contact);
+        public async Task RemoveContactFromCategoryAsync(int categoryId, int contactId)
+        {
+            if(await IsContactInCategory(categoryId, contactId))
+            {
+                var contact = await _context.Contacts.FindAsync(contactId);
 
-            //Alternate
-            //contact.Categories.Add(category);
+                var category = await _context.Categories.FindAsync(categoryId);
 
-            await _context.SaveChangesAsync();
+                category.Contacts.Remove(contact);
+
+                //Alternate
+                //contact.Categories.Add(category);
+
+                await _context.SaveChangesAsync();
+            }
+            
         }
     }
 }

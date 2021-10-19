@@ -29,7 +29,7 @@ namespace MVCAddressBook.Controllers
         public async Task<IActionResult> Index()
         {
             var userId = _userManager.GetUserId(User);
-            var applicationDbContext = await _context.Categories.Include(c => c.User).Where(c => c.UserId == userId).ToListAsync();
+            var applicationDbContext = await _context.Categories.Include(c => c.Contacts).Where(c => c.UserId == userId).ToListAsync();
             return View(applicationDbContext);
         }
 

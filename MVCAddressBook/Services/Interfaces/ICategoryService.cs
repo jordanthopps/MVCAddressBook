@@ -16,5 +16,7 @@ namespace MVCAddressBook.Services.Interfaces
         Task<ICollection<Category>> GetContactCategoriesAsync(int contactId); //ICollection is loosely coupled
 
         Task<int> GetContactCountForCategoryAsync(int categoryId);
+
+        Task<bool> IsContactInCategory(int categoryId, int contactId);
     }
 }
