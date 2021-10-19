@@ -42,7 +42,7 @@ namespace MVCAddressBook.Controllers
         {
             var userId = _userManager.GetUserId(User);
             var model = new ContactIndexViewModel();
-            model.Contacts = await _context.Contacts.Include(c => c.User).Where(c => c.UserId == userId).ToListAsync();
+            model.Contacts = await _context.Contacts.Include(c => c.Categories).Where(c => c.UserId == userId).ToListAsync();
             model.CategoryFilter = new SelectList(_context.Categories.Where(c => c.UserId == userId), "Id", "Name");
             
             return View(model);
@@ -57,7 +57,7 @@ namespace MVCAddressBook.Controllers
             }
 
             var contact = await _context.Contacts
-                .Include(c => c.User)
+                .Include(c => c.Categories)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (contact == null)
             {
@@ -119,7 +119,7 @@ namespace MVCAddressBook.Controllers
                 return NotFound();
             }
 
-            var contact = await _context.Contacts.FindAsync(id);
+            var contact = await _context.Contacts.Include(c => c.Categories).FirstOrDefaultAsync(c => c.Id == id);
             if (contact == null)
             {
                 return NotFound();
@@ -136,7 +136,7 @@ namespace MVCAddressBook.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,FirstName,LastName,Birthday,Address1,Address2,City,State,ZipCode,Email,Phone,Created,ImageData,ImageType, ImageFile")] Contact contact)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,FirstName,LastName,Birthday,Address1,Address2,City,State,ZipCode,Email,Phone,Created,ImageData,ImageType, ImageFile")] Contact contact, List<int> categoryList)
         {
             if (id != contact.Id)
             {
@@ -161,6 +161,18 @@ namespace MVCAddressBook.Controllers
 
                     _context.Update(contact);
                     await _context.SaveChangesAsync();
+
+                    contact = _context.Contacts.Include(c => c.Categories).FirstOrDefault(c => c.Id == contact.Id);
+
+                   foreach(var category in contact.Categories)
+                    {
+                        await _categoryService.RemoveContactFromCategoryAsync(category.Id, contact.Id);
+                    }
+                    
+                    foreach (var categoryId in categoryList)
+                    {
+                        await _categoryService.AddContactToCategoryAsync(categoryId, contact.Id);
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -222,6 +234,10 @@ namespace MVCAddressBook.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> FilterContacts(int categoryId)
         {
+            if(categoryId == 0)
+            {
+                return RedirectToAction(nameof(Index)); //What redirect to action does is allows 
+            }
             var model = new ContactIndexViewModel();
             var userId = _userManager.GetUserId(User);
 
