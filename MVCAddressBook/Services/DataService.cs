@@ -77,7 +77,8 @@ namespace MVCAddressBook.Services
                 City = "Salem Center",
                 Phone = "555-555-0101",
                 State = Enums.States.NY,
-                Email = "hankmccoy@starktower.com"
+                Email = "hankmccoy@starktower.com",
+                Birthday = DateTime.Now
             };
 
             try
