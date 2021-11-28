@@ -1,18 +1,32 @@
-﻿:root{
-
+﻿:root {
     --formfocusColor: var(--gs-secondaryColor);
     --formfocusShadow: rgb(255,255,255,255);
     --dark-gs-color: rgb(19,19,19);
     --light-gs-color: #ffffff;
     --gs-secondaryColor: #70aeff;
     --gs-primaryColor: #91CBFB;
+    --gradient: linear-gradient(90deg, #484b63,#090e38,#040829); /*this variable controls the background HEX*/
+    /*Alternate Color Schema | #bda85c, #eea352, #995050*/
+}
 }
 
 body {
-
     color: var(--light-gs-color);
     font-family: 'Roboto', sans-serif;
-    background-image: url("../img/RainbowClouds.png");
+    /*background-image: url("../img/BackgroundImage/LightDune_1920x1080.jpg");*/
+    background-image: var(--gradient);
+    animation: bg-animation 5s infinite;
+}
+
+@keyframes bg-animation {
+    0% {background-position: left
+    }
+
+    50% {background-position: right
+    }
+
+    100% {background-position: left
+    }
 }
 
 h1,h2,h3,h4,h5,h6{
