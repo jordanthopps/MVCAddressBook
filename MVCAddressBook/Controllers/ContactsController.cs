@@ -63,8 +63,11 @@ namespace MVCAddressBook.Controllers
             {
                 return NotFound();
             }
-
-            return View(contact);
+            var userId = _userManager.GetUserId(User);
+            var model = new ContactCreateViewModel();
+            model.CategoryList = new SelectList(_context.Categories.Where(c => c.UserId == userId), "Id", "Name");
+            model.Contact = contact;
+            return View(model);
         }
 
         // GET: Contacts/Create

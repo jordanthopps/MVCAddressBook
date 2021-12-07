@@ -1,8 +1,56 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_LayoutNoBG.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@*Index View of Welcome with Image Carousel*@
+<div class="container-fluid">
+    <div class="row flex-row justify-content-center">
+        <div class="mt-md-1 flex-column col-12 col-md-6 order-first owl-carousel" style="max-width: 79vh">
+            <div>
+                <img class="img-fluid owl-lazy" src="~/img/Faces/AdventurousSammy.jpg" />
+            </div>
+            <div>
+                <img class="img-fluid" src="~/img/Faces/BlissfulJordyn.jpg" />
+            </div>
+            <div>
+                <img class="img-fluid" src="~/img/Faces/TooCoolCasey.jpg" />
+            </div>
+            <div>
+                <img class="img-fluid" src="~/img/Faces/FaveCousinAnders.jpg" />
+            </div>
+            <div>
+                <img class="img-fluid" src="~/img/Faces/DogWalkerMJ.jpg" />
+            </div>
+            <div>
+                <img class="img-fluid" src="~/img/Faces/MentorLogan.jpg" />
+            </div>
+        </div>
+        <div class="order-last order-md-first address-book flex-column col-12 glass-style mb-5">
+            <h1 class="fw-bold">About the Application</h1>
+            <h4 class="lead">
+                The Address Book is a full-stack .NET application leveraging MVC architecture to create, read, update,
+                and delete contacts in a multi-tenant environment. Click the Login button at the top of the page to demo the application.
+            </h4>
+            <div class="row flex-row">
+                <div class="order-md-first flex-column col-12">
+                    <ul class="fa-ul pt-2 checklist">
+                        <li><span class="fa-li"><i class="fas fa-check-square"></i></span>MVC Design</li>
+                        <li><span class="fa-li"><i class="fas fa-check-square"></i></span>.NET Identity Management</li>
+                        <li><span class="fa-li"><i class="fas fa-check-square"></i></span>Database Engineering</li>
+                        <li><span class="fa-li"><i class="fas fa-check-square"></i></span>API Integration</li>
+                    </ul>
+                </div>
+                <h5 class="fw-bold mt-3">Technologies Used</h5>
+                <div class="order-last flex-column col-12 col-md-6 d-inline-flex align-items-md-start align-items-start justify-content-center justify-content-md-start">
+                    <div class="row">
+                        <div class="col"><i class="fab fa-js-square fa-4x jsicon"></i></div>
+                        <div class="col"><i class="fab fa-bootstrap fa-4x bsicon"></i></div>
+                        <div class="col"><i class="fab fa-html5 fa-4x html5icon"></i></div>
+                        <div class="col"><i class="fab fa-css3-alt fa-4x css3icon"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -1,0 +1,27 @@
+﻿:root {
+    --gradient: linear-gradient(90deg, #484b63,#090e38,#050A30); /*this variable controls the background HEX*/
+    /*Alternate Color Schema | #bda85c, #eea352, #995050*/
+}
+
+/*A class for the about page text*/
+    .address-book > h1, h4 {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-content: center
+}
+
+body {
+    color: #333;
+    background-size: 300%;
+    background-image: var(--gradient);
+    animation: bg-animation 5s infinite;
+}
+
+@keyframes bg-animation {
+    0% {background-position: left}
+
+    50% {background-position: right}
+
+    100% {background-position: left}
+}
