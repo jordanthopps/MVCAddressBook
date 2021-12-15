@@ -3,32 +3,38 @@
     ViewData["Title"] = "Email a Category";
 }
 
-<h1>Create</h1>
+<div class="container-fluid d-flex justify-content-center">
 
-<h4>Bulk Email</h4>
-<hr />
-<div class="row row-cols-1">
-    <div class="col">
-        <form asp-controller="Emails" asp-action="Index" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="mb-3">
-                <select class="form-select" name="categoryId" asp-items="Model.CategoryList">
-                    <option>Choose a Category</option>
-                </select>
+    <div class="row mt-4 glass-style">
+
+        <h1 class="text-center">Send</h1>
+
+        <h4>A Group Email</h4>
+        <hr />
+        <div class="row row-cols-1">
+            <div class="col">
+                <form asp-controller="Emails" asp-action="Index" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="mb-3">
+                        <select class="form-select" name="categoryId" asp-items="Model.CategoryList">
+                            <option>Choose a Category</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Subject" class="form-label"></label>
+                        <input asp-for="Subject" class="form-control" />
+                        <span asp-validation-for="Subject" class="text-danger"></span>
+                    </div>
+                    <div>
+                        <label asp-for="Message" class="form-label"></label>
+                        <textarea asp-for="Message" class="form-control"></textarea>
+                        <span asp-validation-for="Message" class="text-danger"></span>
+                    </div>
+                    <div class="my-3">
+                        <input type="submit" value="Submit Email" class="btn btn-secondary" />
+                    </div>
+                </form>
             </div>
-            <div class="mb-3">
-                <label asp-for="Subject" class="form-label"></label>
-                <input asp-for="Subject" class="form-control" />
-                <span asp-validation-for="Subject" class="text-danger"></span>
-            </div>
-            <div>
-                <label asp-for="Message" class="form-label"></label>
-                <textarea asp-for="Message" class="form-control"></textarea>
-                <span asp-validation-for="Message" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <input type="submit" value="Submit Email" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
