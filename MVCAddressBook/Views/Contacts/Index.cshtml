@@ -16,7 +16,7 @@
             <a asp-action="Create"><i class="bi bi-person-plus-fill"></i></a>
         </p>
         <div class="row row-cols-1 row-cols-md-2">
-            <div class="col"> @*Verify working search*@
+            <div class="col">
                 <form method="post" asp-controller="Contacts" asp-action="SearchContacts">
                     <input type="text" name="searchString" class="form-control" placeholder="Search..." />
                     <button class="mt-2 btn btn-secondary" type="submit">Search</button>
@@ -32,7 +32,7 @@
                 </form>
             </div>
         </div>
-        <table class="table">
+        <table class="table mt-4">
             <thead>
                 <tr>
                     <th>

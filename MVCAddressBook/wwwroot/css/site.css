@@ -13,9 +13,9 @@ a {
     color: #ffffff;
 }
 
-a:hover {
-    color: darkorange;
-}
+    a:hover {
+        color: #a7a8a7;
+    }
 
 .table {
     color: white;
