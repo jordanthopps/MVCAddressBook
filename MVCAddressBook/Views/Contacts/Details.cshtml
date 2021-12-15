@@ -6,86 +6,92 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<div class="container-fluid d-flex justify-content-center">
 
-<div>
-    <h4>Contact</h4>
-    <hr />
+    <div class="row glass-style">
 
-    <div class="glass-style nav-bg p-2">
-        @*Glassmorphism*@
-        <form class="row">
-            <div class="col-12 col-md-4">
-                <img class="img-fluid" src="@ImageService.DecodeImage(Model.Contact.ImageData, Model.Contact.ImageType)" />
-            </div>
-            <div class="col-12 col-md-8">
-                <div class="row gy-2">
-                    <div class="col-12 col-md-6">
-                        <label for="inputFirstName" class="form-label">First Name</label>
-                        <input type="text" readonly class="form-control" id="inputFirstName" placeholder="First Name" value="@Model.Contact.FirstName"/>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label for="inputLastName" class="form-label">Last Name</label>
-                        <input type="text" readonly class="form-control" id="inputLastName" placeholder="Last Name" value="@Model.Contact.LastName" />
-                    </div>
-                    <div class="col-12">
-                        <label for="inputAddress1" class="control-label">Address 1</label>
-                        <input type="text" readonly class="form-control" id="inputAddress" placeholder="Address 1" value="@Model.Contact.Address1" />
-                    </div>
-                    <div class="col-12">
-                        <label for="inputAddress2" class="control-label">Address 2</label>
-                        <input type="text" readonly class="form-control" id="inputAddress" placeholder="Address 2" value="@Model.Contact.Address2" />
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label for="inputCity" class="control-label">City</label>
-                        <input type="text" readonly class="form-control" id="inputCity" placeholder="City" value="@Model.Contact.City" />
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <label for="inputState" class="control-label">State</label>
-                        <input type="text" readonly class="form-control" id="inputState" placeholder="State" value="@Model.Contact.State" />
-                    </div>
-                    <div class="col-12 col-md-2">
-                        <label for="inputZipCode" class="control-label">ZipCode</label>
-                        <input type="text" readonly class="form-control" id="inputZipCode" placeholder="ZipCode" value="@Model.Contact.ZipCode" />
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label for="inputEmail" class="control-label">Email</label>
-                        <input type="text" readonly class="form-control" id="inputEmail" placeholder="Email" value="@Model.Contact.Email" />
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label for="inputPhone" class="control-label">Phone</label>
-                        <input type="text" readonly class="form-control" id="inputPhone" placeholder="Phone" value="@Model.Contact.Phone" />
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label for="inputBirthday" class="control-label">Birthday</label>
-                        <input type="text" readonly class="form-control" id="inputBirthday" placeholder="Birthday" value="@Model.Contact.Birthday" />
-                    </div>
-                    <div class="col-12">
-                        @foreach (var category in Model.CategoryList)
-                        {
-                            if (Model.Contact.Categories.Select(c => c.Id).ToList().Contains(Convert.ToInt32(category.Value)))
+        <h1>
+            @Html.DisplayFor(model => model.Contact.FullName)
+        </h1>
+
+
+        <div nav-bg p-2">
+            @*Glassmorphism*@
+            <form class="row">
+                <div class="col-12 col-md-4 mt-3">
+                    <img class="img-fluid" src="@ImageService.DecodeImage(Model.Contact.ImageData, Model.Contact.ImageType)" />
+                </div>
+                <div class="col-12 col-md-8">
+                    <div class="row gy-2">
+                        <div class="col-12 col-md-6">
+                            <label for="inputFirstName" class="form-label">First Name</label>
+                            <input type="text" readonly class="form-control" id="inputFirstName" placeholder="First Name" value="@Model.Contact.FirstName" />
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="inputLastName" class="form-label">Last Name</label>
+                            <input type="text" readonly class="form-control" id="inputLastName" placeholder="Last Name" value="@Model.Contact.LastName" />
+                        </div>
+                        <div class="col-12">
+                            <label for="inputAddress1" class="control-label">Address 1</label>
+                            <input type="text" readonly class="form-control" id="inputAddress" placeholder="Address 1" value="@Model.Contact.Address1" />
+                        </div>
+                        <div class="col-12">
+                            <label for="inputAddress2" class="control-label">Address 2</label>
+                            <input type="text" readonly class="form-control" id="inputAddress" placeholder="Address 2" value="@Model.Contact.Address2" />
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="inputCity" class="control-label">City</label>
+                            <input type="text" readonly class="form-control" id="inputCity" placeholder="City" value="@Model.Contact.City" />
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <label for="inputState" class="control-label">State</label>
+                            <input type="text" readonly class="form-control" id="inputState" placeholder="State" value="@Model.Contact.State" />
+                        </div>
+                        <div class="col-12 col-md-2">
+                            <label for="inputZipCode" class="control-label">ZipCode</label>
+                            <input type="text" readonly class="form-control" id="inputZipCode" placeholder="ZipCode" value="@Model.Contact.ZipCode" />
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="inputEmail" class="control-label">Email</label>
+                            <input type="text" readonly class="form-control" id="inputEmail" placeholder="Email" value="@Model.Contact.Email" />
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="inputPhone" class="control-label">Phone</label>
+                            <input type="text" readonly class="form-control" id="inputPhone" placeholder="Phone" value="@Model.Contact.Phone" />
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label for="inputBirthday" class="control-label">Birthday</label>
+                            <input type="text" readonly class="form-control" id="inputBirthday" placeholder="Birthday" value="@Model.Contact.Birthday" />
+                        </div>
+                        <div class="col-12">
+                            @foreach (var category in Model.CategoryList)
                             {
-                                <div class="form-check form-check-inline form-switch">
-                                    <input type="checkbox" onclick="return false" checked class="form-check-input" name="CategoryList" value="@category.Value" />
-                                    <label class="form-check-label"  for="CategoryList">@category.Text</label>
-                                </div>
+                                if (Model.Contact.Categories.Select(c => c.Id).ToList().Contains(Convert.ToInt32(category.Value)))
+                                {
+                                    <div class="form-check form-check-inline form-switch">
+                                        <input type="checkbox" onclick="return false" checked class="form-check-input" name="CategoryList" value="@category.Value" />
+                                        <label class="form-check-label" for="CategoryList">@category.Text</label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="form-check form-check-inline form-switch">
+                                        <input type="checkbox" onclick="return false" class="form-check-input" name="CategoryList" value="@category.Value" />
+                                        <label class="form-check-label" for="CategoryList">@category.Text</label>
+                                    </div>
+                                }
                             }
-                            else
-                            {
-                                <div class="form-check form-check-inline form-switch">
-                                    <input type="checkbox" onclick="return false" class="form-check-input" name="CategoryList" value="@category.Value" />
-                                    <label class="form-check-label" for="CategoryList">@category.Text</label>
-                                </div>
-                            }
-                        }
+                        </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
+        <div class="col-6" style="font-size: 2.5rem;">
+            <a asp-action="Index"><i class="bi bi-backspace"></i></a>
+        </div>
+        <div class="col-6 text-end" style="font-size: 2.5rem;">
+            <a class="text-end" asp-action="Edit" asp-route-id="@Model.Contact.Id"><i class="bi bi-clipboard"></i></a>
+        </div>
     </div>
-
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Contact.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
 </div>

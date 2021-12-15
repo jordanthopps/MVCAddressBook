@@ -4,76 +4,84 @@
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_LayoutNoBG.cshtml";
 }
 
-<h1>Index</h1>
+<div class="container-fluid d-flex justify-content-center">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<div class="row row-cols-1 row-cols-md-2">
-    <div class="col">
-        <form method="post" asp-controller="Contacts" asp-action="SearchContacts">
-            <input type="text" name="searchString" class="form-control" placeholder="Search..." />
-            <button class="btn btn-outline-secondary" type="submit">Search</button>
-        </form>
-    </div>
-    <div class="col">
-        <form method="post" asp-controller="Contacts" asp-action="FilterContacts">
-            <select name="categoryId" class="form-select" asp-items="Model.CategoryFilter">
-                <!--This line of code creates a filter dropdown menu-->
-                <option>Select a Category</option> <!--Pushes Select a Category to the top of a dropdown-->
-            </select>
-            <button class="btn btn-outline-secondary" type="submit">Filter</button>
-        </form>
+    <div class="row mt-5 glass-style">
+
+        <h1>All Contacts</h1>
+
+        <p style="padding-left:1rem; font-size:30px">
+            <a asp-action="Create"><i class="bi bi-person-plus-fill"></i></a>
+        </p>
+        <div class="row row-cols-1 row-cols-md-2">
+            <div class="col">
+                <form method="post" asp-controller="Contacts" asp-action="SearchContacts">
+                    <input type="text" name="searchString" class="form-control" placeholder="Search..." />
+                    <button class="mt-2 btn btn-secondary" type="submit">Search</button>
+                </form>
+            </div>
+            <div class="col">
+                <form method="post" asp-controller="Contacts" asp-action="FilterContacts">
+                    <select name="categoryId" class="form-select" asp-items="Model.CategoryFilter">
+                        <!--This line of code creates a filter dropdown menu-->
+                        <option>Select a Category</option> <!--Pushes Select a Category to the top of a dropdown-->
+                    </select>
+                    <button class="mt-2 btn btn-secondary" type="submit">Filter</button>
+                </form>
+            </div>
+        </div>
+        <table class="table mt-4">
+            <thead>
+                <tr>
+                    <th>
+
+                    </th>
+                    <th>
+                        First Name
+                    </th>
+                    <th>
+                        Last Name
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        Phone
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Contacts)
+                {
+                    <tr>
+                        <td>
+                            <img class="img-fluid" src="@ImageService.DecodeImage(item.ImageData, item.ImageType)" width="100" length="100" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Phone)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-clipboard"></i></a> |
+                            <a asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-search"></i></a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash-fill"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                
-            </th>
-            <th>
-                First Name
-            </th>
-            <th>
-                Last Name
-            </th>
-            <th>
-                Email
-            </th>
-            <th>
-                Phone
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Contacts)
-        {
-            <tr>
-                <td>
-                    <img class="img-fluid" src="@ImageService.DecodeImage(item.ImageData, item.ImageType)" width="100" length="100" />
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Phone)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>

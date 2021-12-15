@@ -45,7 +45,7 @@ h1,h2,h3,h4,h5,h6{
     /*don't change these values just use them*/
     border-radius: 10px;
     box-shadow: rgba(0,0,0,.3) 2px 8px 8px;
-    border 2px rgba(255,255,255,.4) solid;
+    border: 2px rgba(255,255,255,.4) solid;
     border-bottom: 2px rgba(40,40,40,.35) solid;
     border-right: 2px rgba(40,40,40,.35) solid;
 

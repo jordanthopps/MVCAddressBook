@@ -1,5 +1,5 @@
 ﻿:root {
-    --gradient: linear-gradient(90deg, #484b63,#090e38,#050A30); /*this variable controls the background HEX*/
+    --gradient: linear-gradient(90deg, #3f4154,#090e38,#050A30); /*this variable controls the background HEX*/
     /*Alternate Color Schema | #bda85c, #eea352, #995050*/
 }
 
@@ -13,9 +13,9 @@
 
 body {
     color: #333;
-    background-size: 300%;
+    background-size: 200%;
     background-image: var(--gradient);
-    animation: bg-animation 5s infinite;
+    animation: bg-animation 8s infinite;
 }
 
 @keyframes bg-animation {
