@@ -77,13 +77,13 @@ namespace MVCAddressBook.Services
                 City = "Salem Center",
                 Phone = "555-555-0101",
                 State = Enums.States.NY,
-                Email = "hankmccoy50@starktower.com",
+                Email = "hankmccoy50@mailinator.com",
                 Birthday = DateTime.Now
             };
 
             try
             {
-                var contact = await dbContextSvc.Contacts.AnyAsync(c => c.Email == "hankmccoy@starktower.com" && c.UserId == userId); //The actual user
+                var contact = await dbContextSvc.Contacts.AnyAsync(c => c.Email == "hankmccoy50@mailinator.com" && c.UserId == userId); //The actual user
                 if (!contact)
                 {
                     await dbContextSvc.AddAsync(defaultContact);
@@ -106,11 +106,11 @@ namespace MVCAddressBook.Services
             var defaultCategory = new Category
             {
                 UserId = userId,
-                Name = "X-Men"
+                Name = "Friends"
             };
             try
             {
-                var category = await dbContextSvc.Categories.AnyAsync(c => c.Name == "X-Men" && c.UserId == userId); //The actual user
+                var category = await dbContextSvc.Categories.AnyAsync(c => c.Name == "Friends" && c.UserId == userId); //The actual user
                 if (!category)
                 {
                     await dbContextSvc.AddAsync(defaultCategory);
