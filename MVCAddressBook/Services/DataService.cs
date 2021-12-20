@@ -101,16 +101,16 @@ namespace MVCAddressBook.Services
 
         private async static Task SeedDefaultCategoriesAsync(ApplicationDbContext dbContextSvc)
         {
-            var userId = dbContextSvc.Users.FirstOrDefault(u => u.Email == "moirarose@mailinator.com").Id;
+            var userId = dbContextSvc.Users.FirstOrDefault(u => u.Email == "NexusDemoUser@mailinator.com").Id;
 
             var defaultCategory = new Category
             {
                 UserId = userId,
-                Name = "X-Men"
+                Name = "Friends"
             };
             try
             {
-                var category = await dbContextSvc.Categories.AnyAsync(c => c.Name == "X-Men" && c.UserId == userId); //The actual user
+                var category = await dbContextSvc.Categories.AnyAsync(c => c.Name == "Friends" && c.UserId == userId); //The actual user
                 if (!category)
                 {
                     await dbContextSvc.AddAsync(defaultCategory);
@@ -131,7 +131,7 @@ namespace MVCAddressBook.Services
             var user = dbContextSvc.Users
                 .Include(u => u.Categories)
                 .Include(c => c.Contacts)
-                .FirstOrDefault(u => u.Email == "moirarose@mailinator.com");
+                .FirstOrDefault(u => u.Email == "NexusDemoUser@mailinator.com");
 
             foreach(var contact in user.Contacts)
             {
