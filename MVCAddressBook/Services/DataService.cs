@@ -40,10 +40,10 @@ namespace MVCAddressBook.Services
         {
             var defaultUser = new AppUser //shape of a user
             {
-                UserName = "moirarose@mailinator.com",
-                Email = "moirarose@mailinator.com",
-                FirstName = "Moira",
-                LastName = "Rose",
+                UserName = "NexusDemoUser@mailinator.com",
+                Email = "NexusDemoUser@mailinator.com",
+                FirstName = "Demo",
+                LastName = "User",
                 EmailConfirmed = true,
             };
             try
@@ -65,7 +65,7 @@ namespace MVCAddressBook.Services
 
         private async static Task SeedDefaultContacts(ApplicationDbContext dbContextSvc)
         {
-            var userId = dbContextSvc.Users.FirstOrDefault(u => u.Email == "moirarose@mailinator.com").Id;
+            var userId = dbContextSvc.Users.FirstOrDefault(u => u.Email == "NexusDemoUser@mailinator.com").Id;
 
             var defaultContact = new Contact
             {
@@ -77,13 +77,13 @@ namespace MVCAddressBook.Services
                 City = "Salem Center",
                 Phone = "555-555-0101",
                 State = Enums.States.NY,
-                Email = "hankmccoy@starktower.com",
+                Email = "hankmccoy50@mailinator.com",
                 Birthday = DateTime.Now
             };
 
             try
             {
-                var contact = await dbContextSvc.Contacts.AnyAsync(c => c.Email == "hankmccoy@starktower.com" && c.UserId == userId); //The actual user
+                var contact = await dbContextSvc.Contacts.AnyAsync(c => c.Email == "hankmccoy50@starktower.com" && c.UserId == userId); //The actual user
                 if (!contact)
                 {
                     await dbContextSvc.AddAsync(defaultContact);
