@@ -40,10 +40,10 @@ namespace MVCAddressBook.Services
         {
             var defaultUser = new AppUser //shape of a user
             {
-                UserName = "moirarose@mailinator.com",
-                Email = "moirarose@mailinator.com",
-                FirstName = "Moira",
-                LastName = "Rose",
+                UserName = "NexusDemoUser@mailinator.com",
+                Email = "NexusDemoUser@mailinator.com",
+                FirstName = "Demo",
+                LastName = "User",
                 EmailConfirmed = true,
             };
             try
@@ -65,7 +65,7 @@ namespace MVCAddressBook.Services
 
         private async static Task SeedDefaultContacts(ApplicationDbContext dbContextSvc)
         {
-            var userId = dbContextSvc.Users.FirstOrDefault(u => u.Email == "moirarose@mailinator.com").Id;
+            var userId = dbContextSvc.Users.FirstOrDefault(u => u.Email == "NexusDemoUser@mailinator.com").Id;
 
             var defaultContact = new Contact
             {
@@ -101,7 +101,7 @@ namespace MVCAddressBook.Services
 
         private async static Task SeedDefaultCategoriesAsync(ApplicationDbContext dbContextSvc)
         {
-            var userId = dbContextSvc.Users.FirstOrDefault(u => u.Email == "moirarose@mailinator.com").Id;
+            var userId = dbContextSvc.Users.FirstOrDefault(u => u.Email == "NexusDemoUser@mailinator.com").Id;
 
             var defaultCategory = new Category
             {
@@ -131,7 +131,7 @@ namespace MVCAddressBook.Services
             var user = dbContextSvc.Users
                 .Include(u => u.Categories)
                 .Include(c => c.Contacts)
-                .FirstOrDefault(u => u.Email == "moirarose@mailinator.com");
+                .FirstOrDefault(u => u.Email == "NexusDemoUser@mailinator.com");
 
             foreach(var contact in user.Contacts)
             {
