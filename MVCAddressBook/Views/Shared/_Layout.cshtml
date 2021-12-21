@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity 
+@inject SignInManager<AppUser> SignInManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -24,18 +27,38 @@
 </head>
 <body>
     <header>
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <br />
+            <a asp-controller="Home" asp-action="Index">Home</a>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a asp-controller="Contacts" asp-action="Index">Contacts</a>
+                <a asp-controller="Categories" asp-action="Index">Categories</a>
+            }
+                <br />
+                <a asp-area="Identity"
+                   asp-page="/Account/Login">Log In</a>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <a asp-area="Identity" asp-page="/Account/Manage/Index">Manage Account</a>
+                    <a asp-area="Identity"
+                       asp-page="/Account/Logout">Logout</a>
+                }
+                <a href="https://jordanthopps.netlify.app/#about" target="_blank">About</a>
+
+            </div>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
+                <div>
+                    <div class="navbar-toggler" data-toggle="collapse"
+                         side-menu-bar d-inline-flex">
+                        <span style="font-size:20px;cursor:pointer" onclick="openNav()">&#9776;</span>
+                    </div>
+                </div>
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">The Nexus</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
